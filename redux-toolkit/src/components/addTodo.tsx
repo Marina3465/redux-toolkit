@@ -6,24 +6,21 @@ import { addTodo } from "../store/todoSlice";
 interface AddTodoProps {}
 
 const AddTodo: FunctionComponent<AddTodoProps> = () => {
-  const [text, setText] = useState("");
+  const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
   const handleAdd = () => {
-    if (text.trim()) {
-      dispatch(addTodo(text));
-      setText("");
-    } else {
-      throw new Error("Нельзя добавить пустую задачу!");
-    }
+    if (!title.trim()) return;
+    dispatch(addTodo({ title, description: "" }));
+    setTitle("");
   };
 
   return (
     <Paper style={{ padding: 16, marginBottom: 16 }}>
       <TextField
-        label="New task"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        label="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         fullWidth
       />
       <Button
